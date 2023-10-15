@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+part 'api_response.g.dart';
 
-ApiResponse apiResponseFromJson(String str) =>
+ApiResponse parseApiResponseFromJson(String str) =>
     ApiResponse.fromJson(json.decode(str));
 
+@JsonSerializable(fieldRename: FieldRename.snake)
 class ApiResponse {
   final int buildNumber;
   final String version;
-  final String downloadUrl;
+  final Uri downloadUrl;
   final Checksums checksums;
 
   ApiResponse({
@@ -16,22 +19,22 @@ class ApiResponse {
     required this.checksums,
   });
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(
-        buildNumber: json["build_number"],
-        version: json["version"],
-        downloadUrl: json["download_url"],
-        checksums: Checksums.fromJson(json["checksums"]),
-      );
+  factory ApiResponse.fromJson(Map<String, dynamic> json) =>
+      _$ApiResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ApiResponseToJson(this);
 }
 
+@JsonSerializable()
 class Checksums {
+  final String sha256;
+
   Checksums({
     required this.sha256,
   });
 
-  final String sha256;
+  factory Checksums.fromJson(Map<String, dynamic> json) =>
+      _$ChecksumsFromJson(json);
 
-  factory Checksums.fromJson(Map<String, dynamic> json) => Checksums(
-        sha256: json["sha256"],
-      );
+  Map<String, dynamic> toJson() => _$ChecksumsToJson(this);
 }

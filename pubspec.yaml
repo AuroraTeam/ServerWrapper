@@ -1,6 +1,6 @@
 name: serverwrapper
 description: Aurora ServerWrapper
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/AuroraTeam/ServerWrapper
 
 environment:
@@ -8,7 +8,10 @@ environment:
 
 dependencies:
   crypto: ^3.0.2
-  http: ^0.13.5
+  http: ^1.1.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
+  json_serializable: ^6.7.1
   lints: ^2.0.0
+  build_runner: ^2.4.6
