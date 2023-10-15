@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:json_annotation/json_annotation.dart';
+part 'config.g.dart';
+
 Config configFromJson(String str) => Config.fromJson(json.decode(str));
 
-String configToJson(Config data) => json.encode(data.toJson());
+String configToJson(Config data) =>
+    JsonEncoder.withIndent('  ').convert(data.toJson());
 
 Future<Config> loadConfig() async {
   var file = File(Config.configFilename);
@@ -19,6 +23,7 @@ Future<Config> loadConfig() async {
   exit(0);
 }
 
+@JsonSerializable()
 class Config {
   final String javaExecutablePath;
   final String additionalFlags;
@@ -46,21 +51,7 @@ class Config {
         apiUrl: "example.com",
       );
 
-  factory Config.fromJson(Map<String, dynamic> json) => Config(
-        javaExecutablePath: json["javaExecutablePath"],
-        additionalFlags: json["additionalFlags"],
-        arguments: json["arguments"],
-        injectorFilename: json["injectorFilename"],
-        serverFilename: json["serverFilename"],
-        apiUrl: json["apiUrl"],
-      );
+  factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "javaExecutablePath": javaExecutablePath,
-        "additionalFlags": additionalFlags,
-        "arguments": arguments,
-        "injectorFilename": injectorFilename,
-        "serverFilename": serverFilename,
-        "apiUrl": apiUrl,
-      };
+  Map<String, dynamic> toJson() => _$ConfigToJson(this);
 }
