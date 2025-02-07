@@ -4,7 +4,7 @@ import 'package:serverwrapper/starter.dart';
 
 class ServerWrapper {
   static init(List<String> arguments) async {
-    print('Aurora ServerWrapper v0.1.0');
+    print('Aurora ServerWrapper v1.1.0');
 
     var config = await loadConfig();
     print("Configuration loaded successfully");
