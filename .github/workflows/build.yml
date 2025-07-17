@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             fileName: "sw_linux_x64"
             file: "sw"
           - os: windows-latest

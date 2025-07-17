@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json;
-use std::fs;
+use std::{fs, process::exit};
 
 pub fn get_config() -> Settings {
     let config = {
@@ -21,7 +21,8 @@ pub fn get_config() -> Settings {
                     serde_json::to_string_pretty(&config).unwrap(),
                 )
                 .expect("Can't write to file");
-                panic!("Config not found, a default config was created. \nPlease configure it.");
+                println!("Config not found, a default config was created. \nPlease configure it.");
+                exit(1);
             }
         };
         serde_json::from_str::<Settings>(&s).unwrap()
